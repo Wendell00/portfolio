@@ -1,0 +1,48 @@
+@layer base {
+  @font-face {
+    font-family: "agustina";
+    src: url("/fonts/Agustina-Signature.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* 2️⃣ Define a fonte como variável global (opcional mas elegante) */
+
+  :root {
+    color-scheme: light dark;
+
+    --bg: light-dark(oklch(98.4% 0.003 247.858), oklch(20.8% 0.042 265.755));
+    --bg-secondary: light-dark(#ffffff, oklch(27.9% 0.041 260.031));
+    --accent: light-dark(oklch(68.5% 0.169 237.323), oklch(74.6% 0.16 232.661));
+    --accent-light: light-dark(
+      oklch(68.5% 0.169 237.323) /
+      0.1,
+      oklch(74.6% 0.16 232.661) /
+      0.1
+    );
+    --accent-torch: light-dark(
+      oklch(48.8% 0.243 264.376 / 0.15),
+      oklch(48.8% 0.243 264.376 / 0.15)
+    );
+    --text: light-dark(oklch(44.6% 0.043 257.281), oklch(70.4% 0.04 256.788));
+    --dark-1: light-dark(oklch(20.8% 0.042 265.755), oklch(92.9% 0.013 255.508));
+    --dark-2: light-dark(oklch(37.2% 0.044 257.287), oklch(86.9% 0.022 252.894));
+    --dark-3: light-dark(oklch(86.9% 0.022 252.894), oklch(37.2% 0.044 257.287));
+    --torch: radial-gradient(
+      525px at 50% 50%,
+      var(--color-accent-torch),
+      transparent 80%
+    );
+
+    --font-agustina: "agustina", sans-serif;
+  }
+
+  /* * {
+      @apply focus:outline-dashed outline-[3px] outline-offset-4 outline-[var(--accent)];
+    } */
+
+  ::selection {
+    @apply dark:bg-slate-600/30 bg-slate-400/30 text-[var(--accent)];
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "wendell-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "biome check",
+    "format": "biome format --write"
+  },
+  "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.5.0",
+    "clsx": "^2.0.0",
+    "framer-motion": "^12.23.24",
+    "motion": "^12.23.24",
+    "next": "15.5.4",
+    "next-themes": "^0.4.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "save-dev": "^0.0.1-security",
+    "sharp": "^0.31.3",
+    "tailwind-merge": "^2.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@iconify/react": "^4.0.1",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.12",
+    "postcss": "^8.4.18",
+    "prettier": "^2.8.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

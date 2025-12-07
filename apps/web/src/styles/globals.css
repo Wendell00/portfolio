@@ -1,0 +1,38 @@
+@import "tailwindcss";
+@import "./colors.css";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-torch: var(--accent-torch);
+  --color-text: var(--text);
+  --color-dark-1: var(--dark-1);
+  --color-dark-2: var(--dark-2);
+  --color-dark-3: var(--dark-3);
+  --color-torch: var(--torch);
+}
+
+@layer utilities {
+  .bg-torch {
+    background: radial-gradient(
+      525px at 50% 50%,
+      var(--color-accent-torch),
+      transparent 100%
+    );
+  }
+
+  .font-agustina {
+    font-family: var(--font-agustina);
+  }
+
+  .heading-secondary,
+  .h2 {
+    @apply text-3xl sm:text-4xl capitalize font-medium mb-8 sm:mb-12 text-[var(--dark-2)];
+  }
+  .heading-tertiary,
+  .h3 {
+    @apply text-xl sm:text-2xl tracking-wide capitalize font-medium text-[var(--dark-2)];
+  }
+}

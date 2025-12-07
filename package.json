@@ -1,0 +1,17 @@
+{
+	"name": "wendell-borges",
+	"type": "module",
+	"packageManager": "pnpm@10.12.4",
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"start": "turbo run start",
+		"lint": "turbo run lint",
+		"format": "turbo run format"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.3.7",
+		"turbo": "^2.5.4",
+		"typescript": "^5.8.3"
+	}
+}
