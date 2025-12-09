@@ -13,9 +13,9 @@ async function bootstrap() {
 	app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
 	const config = new DocumentBuilder()
-		.setTitle("WeFinance API")
+		.setTitle("Portifolio")
 		.setDescription(
-			"Documentação da API para o sistema de finanças pessoais e familiares",
+			"Documentação da API para o portifolio pessoal",
 		)
 		.setVersion("1.0")
 		.addBearerAuth(
