@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import type { Role } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
 import type { CreateUserDto } from "./dto/createuser.dto";
+import { PayloadAccessTokenDto } from "@/auth/dto/payload-access-token.dto";
 
 @Injectable()
 export class UserService {
@@ -28,7 +29,7 @@ export class UserService {
 	async verifyUser(email: string) {
 		try {
 			const findUser = await this.prisma.users.findFirst({
-				where: { email: email, active: true, deletedAt: null },
+				where: { email: email ? , active: true, deletedAt: null },
 			});
 
 			if (!findUser) {
@@ -41,5 +42,11 @@ export class UserService {
 		} catch (error) {
 			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
 		}
+	}
+
+	async updateUser(){}
+
+	async getUser(payloadAccessToken: PayloadAccessTokenDto){
+
 	}
 }

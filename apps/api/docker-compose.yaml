@@ -6,4 +6,4 @@ services:
       POSTGRESQL_PASSWORD: docker
       POSTGRESQL_DATABASE: docker
     ports:
-      - 5433:5432
+      - 5435:5432

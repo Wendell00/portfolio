@@ -3,14 +3,17 @@ import {
 	AdminInitiateAuthCommand,
 	AdminUpdateUserAttributesCommand,
 	type CognitoIdentityProviderClient,
+	InitiateAuthCommand,
 	SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { createHmac } from "crypto";
+import { response } from "express";
 import type { CreateUserDto } from "../user/dto/createuser.dto";
 import { UserService } from "../user/user.service";
 import { COGNITO_PROVIDER } from "./config/cognito.provider";
 import { LoginUserDto } from "./dto/login-user.dto";
+import { RefreshTokenDto } from "./dto/refresh-token.dto";
 
 @Injectable()
 export class AuthService {
@@ -125,7 +128,49 @@ export class AuthService {
 				expiresIn: res.AuthenticationResult.ExpiresIn,
 			};
 		} catch (error) {
-			console.log(error)
+			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	async refreshToken(refreshTokenDto: RefreshTokenDto) {
+		const clientId = this.requiredEnv("COGNITO_CLIENT_ID");
+		const clientSecret = this.requiredEnv("COGNITO_SECRET_ID");
+
+		try {
+			const findUser = await this.userServices.verifyUser(
+				refreshTokenDto.email,
+			);
+
+			const secretHash = this.generateSecretHash(
+				findUser.cognito_id,
+				clientId,
+				clientSecret,
+			);
+			const command = new InitiateAuthCommand({
+				AuthFlow: "REFRESH_TOKEN_AUTH",
+				ClientId: clientId,
+				AuthParameters: {
+					REFRESH_TOKEN: refreshTokenDto.refreshToken,
+					SECRET_HASH: secretHash,
+				},
+			});
+
+			const res = await this.client.send(command);
+			const result = res.AuthenticationResult;
+
+			if (!result) {
+				throw new Error("Não foi possível renovar os tokens");
+			}
+
+			return {
+				accessToken: result.AccessToken,
+				idToken: result.IdToken,
+				refreshToken: result.RefreshToken ?? refreshTokenDto.refreshToken,
+				expiresIn: result.ExpiresIn,
+				tokenType: result.TokenType,
+			};
+		} catch (error) {
+			console.log(error);
 			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
 		}
 	}

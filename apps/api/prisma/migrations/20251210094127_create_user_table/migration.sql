@@ -13,7 +13,7 @@ CREATE TABLE "public"."Users" (
     "deletedAt" TIMESTAMP(3),
     "active" BOOLEAN NOT NULL DEFAULT true,
     "avatar_upload_id" TEXT,
-    "cognito_id" TEXT,
+    "cognito_id" TEXT NOT NULL,
 
     CONSTRAINT "Users_pkey" PRIMARY KEY ("id")
 );
@@ -31,9 +31,6 @@ CREATE TABLE "public"."Upload" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Users_email_key" ON "public"."Users"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Users_avatar_upload_id_key" ON "public"."Users"("avatar_upload_id");
 
 -- AddForeignKey
 ALTER TABLE "public"."Users" ADD CONSTRAINT "Users_avatar_upload_id_fkey" FOREIGN KEY ("avatar_upload_id") REFERENCES "public"."Upload"("id") ON DELETE CASCADE ON UPDATE CASCADE;
