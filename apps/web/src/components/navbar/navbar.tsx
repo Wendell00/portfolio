@@ -9,13 +9,7 @@ import { author } from "@/lib/content/portfolio";
 import useWindowWidth from "@/lib/hooks/use-window-width";
 import { getBreakpointsWidth } from "@/lib/utils/helper";
 import { fadeIn, slideIn } from "@/styles/animations";
-
-/**
- * Hides the navbar while scrolling down
- * @param {Object} config
- * @param {String} [config.id=navbar] - id of navbar
- * @param {Number} [config.offset=100] - offset of navbar in px
- */
+import type { NavItemsProps } from "./types";
 
 const hideNavWhileScrolling = ({
 	id = "navbar",
@@ -41,14 +35,6 @@ const hideNavWhileScrolling = ({
 	};
 };
 
-type NavItemsProps = {
-	href?: string;
-	children: React.ReactNode;
-	index: number;
-	delay: number;
-	onClick?: (event: React.MouseEvent) => void;
-};
-
 const NavItem = ({ href, children, onClick, index, delay }: NavItemsProps) => {
 	return (
 		<motion.li
@@ -69,10 +55,10 @@ const NavItem = ({ href, children, onClick, index, delay }: NavItemsProps) => {
 	);
 };
 
-const Navbar = () => {
+export const Navbar = () => {
 	const { cta, navLinks } = navbarSection;
 	const [navbarCollapsed, setNavbarCollapsed] = useState(false);
-
+	const id = "navbar";
 	const windowWidth = useWindowWidth();
 	const md = getBreakpointsWidth("md");
 	const ANIMATION_DELAY = windowWidth <= md ? 0 : 0.8;
@@ -86,7 +72,7 @@ const Navbar = () => {
 			variants={fadeIn(0.5)}
 			initial="hidden"
 			animate="show"
-			id="navbar"
+			id={id}
 			className="fixed inset-x-0 top-0 right-0 z-50 flex items-end justify-between px-8 py-4 duration-500 md:px-6 xl:px-12 backdrop-blur-lg"
 		>
 			<h1 className="relative text-2xl capitalize font-agustina text-accent group top-1">
@@ -151,5 +137,3 @@ const Navbar = () => {
 		</motion.header>
 	);
 };
-
-export default Navbar;

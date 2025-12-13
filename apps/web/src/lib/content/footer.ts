@@ -1,6 +1,6 @@
-import { FooterSectionType } from "@/lib/types/sections";
+import type { FooterSectionType } from "@/lib/types/sections";
 
 export const footerSection: FooterSectionType = {
-  title: "Design & Built by Wendell Borges",
-  link: "https://github.com/vatsalsinghkv/portfolio-website",
+	title: "Design & Built by Wendell Borges",
+	link: "https://github.com/Wendell00/portfolio",
 };

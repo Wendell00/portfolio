@@ -34,7 +34,7 @@ const About = () => {
 					<p>
 						I'm also an artist at heart, always exploring creativity while diving deep into technology.
 						Fast-forward to today, I've had the privilege of working at companies such as{" "}
-						<strong>Start Your App</strong>, <strong>Grupo Permaneo</strong>
+						<strong>Start Your App</strong>, <strong>Grupo Permaneo</strong>{" "}
 						 and others — experiences that helped me grow both technically and professionally.
 					</p>
 
