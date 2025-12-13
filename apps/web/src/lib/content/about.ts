@@ -15,5 +15,5 @@ export const aboutSection: AboutSectionType = {
 			"AWS",
 		],
 	},
-	img: "/wendell-borges.jpeg",
+	img: "/wendell-borges.jpg",
 };
