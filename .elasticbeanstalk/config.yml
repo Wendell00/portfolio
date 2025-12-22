@@ -1,0 +1,12 @@
+branch-defaults:
+  main:
+    environment: Api-env
+
+global:
+  application_name: api
+  default_platform: Docker
+  default_region: us-east-2
+  workspace_type: Application
+
+deploy:
+  artifact: deploy.zip

@@ -9,7 +9,7 @@ import {
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { createHmac } from "crypto";
 import { response } from "express";
-import type { CreateUserDto } from "../user/dto/createuser.dto";
+import type { CreateUserDto } from "../user/dto/create-user.dto";
 import { UserService } from "../user/user.service";
 import { COGNITO_PROVIDER } from "./config/cognito.provider";
 import { LoginUserDto } from "./dto/login-user.dto";

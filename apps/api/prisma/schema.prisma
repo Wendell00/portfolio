@@ -19,8 +19,7 @@ model Users {
   deletedAt DateTime? 
   active  Boolean  @default(true)
 
-  avatar_upload_id String?    
-  avatar           Upload?    @relation(fields: [avatar_upload_id], references: [id], onDelete: Cascade)
+  uploads   Upload[]
 
   cognito_id String
 } 
@@ -32,10 +31,21 @@ model Upload {
   size Float
   name String
 
-  user Users[]
+  user_id   String
+  user      Users   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  type      UploadType
+  createdAt DateTime @default(now())
 }
 
 enum Role{
   USER
   ADMIN
+}
+
+enum UploadType {
+  AVATAR
+  POST
+  DOCUMENT
+  OTHER
 }

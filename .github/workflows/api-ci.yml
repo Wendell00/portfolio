@@ -1,0 +1,32 @@
+name: Deploy API (Docker EB)
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-api:
+    runs-on: ubuntu-latest
+    environment: portfolio
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Apenas zipa o contexto Docker
+      - name: Create deploy zip
+        run: |
+          zip -r deploy.zip . \
+            -x "node_modules/*" \
+            -x ".git/*" \
+            -x ".github/*"
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_REGION }}
+          application_name: api
+          environment_name: Api-env
+          version_label: api-${{ github.sha }}
+          deployment_package: deploy.zip
