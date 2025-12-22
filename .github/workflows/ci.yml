@@ -1,9 +1,5 @@
 name: Deploy API (Docker EB)
 
-on:
-  push:
-    branches: [main]
-
 jobs:
   deploy-api:
     runs-on: ubuntu-latest
