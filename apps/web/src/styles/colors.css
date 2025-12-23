@@ -7,8 +7,6 @@
     font-display: swap;
   }
 
-  /* 2️⃣ Define a fonte como variável global (opcional mas elegante) */
-
   :root {
     color-scheme: light dark;
 
@@ -36,6 +34,14 @@
     );
 
     --font-agustina: "agustina", sans-serif;
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
   }
 
   /* * {

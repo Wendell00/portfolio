@@ -37,7 +37,7 @@ const Hero = () => {
           variants={slideUp({ delay: getAnimationDelay(1) })}
           initial="hidden"
           animate="show"
-          className="text-slate-900 dark:text-slate-200 capitalize mb-2 leading-[1.1]"
+          className="text-dark-1 capitalize mb-2 leading-[1.1]"
         >
           {title}
         </motion.h1>

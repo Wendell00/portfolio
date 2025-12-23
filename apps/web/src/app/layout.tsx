@@ -82,7 +82,7 @@ export default function RootLayout({
 			<body className={`text-text bg-bg ${fontVariables}`}>
 				<Cursor className="block" />
 				<ThemeProvider
-					defaultTheme="light"
+					defaultTheme="dark"
 					enableSystem
 					disableTransitionOnChange
 				>
