@@ -1,8 +1,8 @@
 "use client";
-import { removeKeys } from "@/lib/utils/helper";
 
-import { motion, MotionProps } from "framer-motion";
+import { type MotionProps, motion } from "framer-motion";
 import Link from "next/link";
+import { removeKeys } from "@/lib/utils/helper";
 
 interface DefaultProps {
   children: React.ReactNode | string;
@@ -39,18 +39,10 @@ const buttonProps: Array<keyof Props | keyof LinkProps> = [
 ];
 
 const Button = (props: Props & MotionProps) => {
-  const {
-    className,
-    children,
-    type = "button",
-    size = "sm",
-    center = false,
-  } = props;
+  const { className, children, type = "button", size = "sm", center = false } = props;
 
   const classes = `${
-    size === "sm"
-      ? "p-2 px-4 text-sm border-[1.5px] "
-      : "text-sm p-4 px-6 border-2"
+    size === "sm" ? "p-2 px-4 text-sm border-[1.5px] " : "text-sm p-4 px-6 border-2"
   } block ${
     center ? "mx-auto" : ""
   } w-fit font-mono capitalize rounded border-accent text-accent hover:bg-accent-light focus:outline-none focus:bg-accent-light duration-150 cursor-pointer ${className}`;
@@ -74,7 +66,7 @@ const Button = (props: Props & MotionProps) => {
     );
   }
 
-  if (type == "button") {
+  if (type === "button") {
     return (
       <button type={type} className={classes} onClick={props.onClick}>
         {children}
@@ -82,7 +74,7 @@ const Button = (props: Props & MotionProps) => {
     );
   }
 
-  return <></>;
+  return null;
 };
 
 export default Button;

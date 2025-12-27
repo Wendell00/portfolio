@@ -12,91 +12,81 @@ import Social from "@/components/social/social";
 import { ThemeProvider } from "@/providers/theme-provider";
 
 export const metadata: Metadata = {
-	title: seoData.title,
-	authors: [
-		{
-			name: seoData.author,
-		},
-	],
-	description: seoData.description,
-	keywords: seoData.keywords.join(","),
-	metadataBase: new URL(seoData.url),
-	alternates: {
-		canonical: seoData.url,
-	},
-	openGraph: {
-		type: "website",
-		url: seoData.url,
-		title: seoData.title,
-		description: seoData.description,
-		images: seoData.image,
-		siteName: seoData.title,
-	},
-	twitter: {
-		card: "summary_large_image",
-		title: seoData.title,
-		description: seoData.description,
-		images: seoData.image,
-		site: seoData.url,
-	},
-	icons: [
-		{
-			rel: "apple-touch-icon",
-			sizes: "120x120",
-			url: "/favicons/apple-touch-icon.png",
-		},
-		{
-			rel: "icon",
-			type: "image/png",
-			sizes: "512x512",
-			url: "/favicons/web-app-manifest-512x512.png",
-		},
-		{
-			rel: "icon",
-			type: "image/png",
-			sizes: "192x192",
-			url: "/favicons/web-app-manifest-192x192.png",
-		},
-		{
-			rel: "icon",
-			type: "image/png",
-			sizes: "32x32",
-			url: "/favicons/favicon.svg",
-		},
-		{
-			rel: "icon",
-			type: "image/png",
-			sizes: "16x16",
-			url: "/favicons/favicon.svg",
-		},
-	],
+  title: seoData.title,
+  authors: [
+    {
+      name: seoData.author,
+    },
+  ],
+  description: seoData.description,
+  keywords: seoData.keywords.join(","),
+  metadataBase: new URL(seoData.url),
+  alternates: {
+    canonical: seoData.url,
+  },
+  openGraph: {
+    type: "website",
+    url: seoData.url,
+    title: seoData.title,
+    description: seoData.description,
+    images: seoData.image,
+    siteName: seoData.title,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: seoData.title,
+    description: seoData.description,
+    images: seoData.image,
+    site: seoData.url,
+  },
+  icons: [
+    {
+      rel: "apple-touch-icon",
+      sizes: "120x120",
+      url: "/favicons/apple-touch-icon.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "512x512",
+      url: "/favicons/web-app-manifest-512x512.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "192x192",
+      url: "/favicons/web-app-manifest-192x192.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      url: "/favicons/favicon.svg",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      url: "/favicons/favicon.svg",
+    },
+  ],
 };
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
-	return (
-		<html lang="en" className="scroll-smooth">
-			<body className={`text-text bg-bg ${fontVariables}`}>
-				<Cursor className="block" />
-				<ThemeProvider
-					defaultTheme="dark"
-					enableSystem
-					disableTransitionOnChange
-				>
-					<Navbar />
-					<main
-						className={`mx-auto px-6 sm:px-8 md:px-28 lg:px-20 xl:px-0 max-w-screen-lg`}
-					>
-						{children}
-					</main>
-					<Footer />
-					<Social />
-					<Email />
-				</ThemeProvider>
-			</body>
-		</html>
-	);
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className="scroll-smooth">
+      <body className={`text-text bg-bg ${fontVariables}`}>
+        <Cursor className="block" />
+        <ThemeProvider defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <Navbar />
+          <main className={`mx-auto px-6 sm:px-8 md:px-28 lg:px-20 xl:px-0 max-w-screen-lg`}>
+            {children}
+          </main>
+          <Footer />
+          <Social />
+          <Email />
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }

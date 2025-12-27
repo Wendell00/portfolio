@@ -34,8 +34,7 @@ export type ProjectType = {
   repo: string;
 };
 
-export interface FeaturedProjectType
-  extends Omit<ProjectType, "year" | "repo"> {
+export interface FeaturedProjectType extends Omit<ProjectType, "year" | "repo"> {
   description: string;
   repo?: string;
   tasks?: string;

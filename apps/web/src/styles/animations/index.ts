@@ -1,6 +1,5 @@
-import { Direction } from "@/lib/types";
-
-import { Variants } from "framer-motion";
+import type { Variants } from "framer-motion";
+import type { Direction } from "@/lib/types";
 
 /**
  * Make component fade in from opacity 0 to opacity 1

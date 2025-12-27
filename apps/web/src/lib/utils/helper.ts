@@ -1,7 +1,6 @@
-
-import { BreakpointType, ProjectType } from "../types";
-import clsx, { ClassValue } from "clsx";
+import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import type { ProjectType } from "../types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -13,9 +12,9 @@ export function cn(...inputs: ClassValue[]) {
  * @returns width - Width of the breakpoint
  */
 
-export const getBreakpointsWidth = (breakpoint: BreakpointType) => {
+export const getBreakpointsWidth = () => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+
   return 1;
 };
 
@@ -43,5 +42,7 @@ export const sortByYear = (projects: ProjectType[]) => {
  */
 
 export const removeKeys = <T>(object: T, keys: Array<keyof T>) => {
-  keys.forEach((field) => delete object[field]);
+  keys.forEach((field) => {
+    delete object[field];
+  });
 };

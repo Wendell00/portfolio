@@ -1,11 +1,10 @@
 "use client";
-import useWindowWidth from "@/lib/hooks/use-window-width";
-import { ExperienceType } from "@/lib/types";
-import { getBreakpointsWidth, getId } from "@/lib/utils/helper";
-
-import { Link, ListItem } from "@/components";
 
 import { useState } from "react";
+import { Link, ListItem } from "@/components";
+import useWindowWidth from "@/lib/hooks/use-window-width";
+import type { ExperienceType } from "@/lib/types";
+import { getBreakpointsWidth, getId } from "@/lib/utils/helper";
 
 type Props = {
   experiences: ExperienceType[];
@@ -15,10 +14,9 @@ const TabList = ({ experiences }: Props) => {
   const [activeExperience, setActiveExperience] = useState(0);
   const windowWidth = useWindowWidth();
 
-  const { role, company, companyUrl, started, upto, tasks } =
-    experiences[activeExperience];
+  const { role, company, companyUrl, started, upto, tasks } = experiences[activeExperience];
 
-  const sm = getBreakpointsWidth("sm");
+  const sm = getBreakpointsWidth();
 
   const sliderStyle =
     windowWidth <= sm
@@ -40,6 +38,7 @@ const TabList = ({ experiences }: Props) => {
               i === activeExperience ? "text-accent" : ""
             }`}
             onClick={() => setActiveExperience(i)}
+            type="button"
           >
             {company}
           </button>
@@ -61,9 +60,7 @@ const TabList = ({ experiences }: Props) => {
             </Link>
           </h3>
           <p className="font-mono text-xs capitalize">
-            <>
-              {started} - {upto}
-            </>
+            {started.toString()} - {upto.toString()}
           </p>
         </div>
 

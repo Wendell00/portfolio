@@ -2,7 +2,7 @@
 import { Player } from "@lottiefiles/react-lottie-player";
 
 type Props = {
-  path: any;
+  path: string;
   className?: string;
 };
 

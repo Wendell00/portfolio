@@ -4,15 +4,15 @@ import { motion } from "motion/react";
 import { Button, Wrapper } from "@/components";
 import { heroSection } from "@/lib/content/hero";
 import useWindowWidth from "@/lib/hooks/use-window-width";
+import { SECTION_IDS } from "@/lib/utils/config";
 import { getBreakpointsWidth } from "@/lib/utils/helper";
 import { slideUp } from "@/styles/animations";
 
 const Hero = () => {
-  const { cta, subtitle, title, tagline, description, specialText } =
-    heroSection;
+  const { cta, subtitle, title, tagline, description, specialText } = heroSection;
 
   const windowWidth = useWindowWidth();
-  const md = getBreakpointsWidth("md");
+  const md = getBreakpointsWidth();
   const DEFAULT_ANIMATION_DELAY = windowWidth <= md ? 0.9 : 1.7;
 
   const getAnimationDelay = (i: number, increment = 0.15) =>
@@ -20,7 +20,7 @@ const Hero = () => {
 
   return (
     <Wrapper
-      id="hero"
+      id={SECTION_IDS.HERO}
       className="flex flex-col justify-center h-full min-h-screen gap-6 mt-12 xs:gap-7 xs:mt-0"
     >
       <motion.p
@@ -77,9 +77,7 @@ const Hero = () => {
           initial="hidden"
           animate="show"
           href={cta?.url ?? "#"}
-          className={`mt-5 xs:mt-8 md:mt-10 ${
-            cta.hideInDesktop ? "md:hidden" : ""
-          }`}
+          className={`mt-5 xs:mt-8 md:mt-10 ${cta.hideInDesktop ? "md:hidden" : ""}`}
           sameTab={cta?.sameTab}
         >
           {cta.title}

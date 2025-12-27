@@ -9,24 +9,24 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["src/**/*.js", "src/**/*.ts"]
+    "includes": ["src/**/*.js", "src/**/*.ts", "src/**/*.jsx", "src/**/*.tsx"]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "lineWidth": 100
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
+      "style": {
+        "useFragmentSyntax": "error"
+      },
       "suspicious": {
         "noUnknownAtRules": "off"
       }
-    },
-    "domains": {
-      "next": "recommended",
-      "react": "recommended"
     }
   },
   "assist": {

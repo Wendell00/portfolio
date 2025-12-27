@@ -1,12 +1,7 @@
 "use client";
 
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import {
-  type ComponentProps,
-  type ReactElement,
-  useEffect,
-  useState,
-} from "react";
+import { type ComponentProps, type ReactElement, useEffect, useState } from "react";
 
 export function ThemeProvider({
   children,

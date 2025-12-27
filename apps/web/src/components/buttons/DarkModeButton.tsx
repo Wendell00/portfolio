@@ -9,11 +9,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-const DarkModeButton = ({
-  className,
-  onClick,
-  ...rest
-}: Props & MotionProps) => {
+const DarkModeButton = ({ className, onClick, ...rest }: Props & MotionProps) => {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = (): void => {
@@ -31,11 +27,7 @@ const DarkModeButton = ({
       onClick={toggleTheme}
       {...rest}
     >
-      <Icon
-        icon={theme === "dark" ? "carbon:sun" : "ph:moon"}
-        width="26"
-        height="26"
-      />
+      <Icon icon={theme === "dark" ? "carbon:sun" : "ph:moon"} width="26" height="26" />
     </motion.button>
   );
 };
