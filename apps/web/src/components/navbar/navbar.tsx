@@ -3,13 +3,14 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button, Link as CLink, DarkModeButton, NavButton } from "@/components";
+import { Link as CLink, DarkModeButton, NavButton } from "@/components";
 import { navbarSection } from "@/lib/content/navbar";
 import { author } from "@/lib/content/portfolio";
 import useWindowWidth from "@/lib/hooks/use-window-width";
 import { SECTION_IDS } from "@/lib/utils/config";
 import { getBreakpointsWidth } from "@/lib/utils/helper";
 import { fadeIn, slideIn } from "@/styles/animations";
+import { Button } from "../animate-ui/components/buttons/button";
 import type { NavItemsProps } from "./types";
 
 const hideNavWhileScrolling = ({
@@ -57,7 +58,7 @@ const NavItem = ({ href, children, onClick, index, delay }: NavItemsProps) => {
 };
 
 export const Navbar = () => {
-  const { cta, navLinks } = navbarSection;
+  const { navLinks } = navbarSection;
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
   const id = "navbar";
   const windowWidth = useWindowWidth();
@@ -107,21 +108,16 @@ export const Navbar = () => {
             ))}
 
             <div className="flex items-center justify-between gap-5 xl:gap-6">
-              {cta && (
-                <Button
-                  type="link"
-                  href={cta.url}
-                  sameTab={cta?.sameTab}
-                  variants={slideIn({
-                    delay: ANIMATION_DELAY + navLinks.length / 10,
-                    direction: "down",
-                  })}
-                  initial="hidden"
-                  animate="show"
-                >
-                  {cta.title}
-                </Button>
-              )}
+              <Button
+                type="button"
+                variant="outline"
+                hoverScale={1}
+                tapScale={0.95}
+                onClick={() => window.open("/resume.pdf", "_blank")}
+                className="bg-transparent border-accent text-accent hover:text-white"
+              >
+                Resume
+              </Button>
               <DarkModeButton
                 onClick={() => setNavbarCollapsed(false)}
                 variants={slideIn({
