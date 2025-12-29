@@ -14,14 +14,9 @@ async function bootstrap() {
 
 	const config = new DocumentBuilder()
 		.setTitle("Portifolio")
-		.setDescription(
-			"Documentação da API para o portifolio pessoal",
-		)
+		.setDescription("Documentação da API para o portifolio pessoal")
 		.setVersion("1.0")
-		.addBearerAuth(
-			{ type: "http", scheme: "bearer", bearerFormat: "JWT" },
-			"jwt",
-		)
+		.addBearerAuth({ type: "http", scheme: "bearer", bearerFormat: "JWT" }, "jwt")
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);

@@ -34,9 +34,7 @@ export class AuthService {
 	generateSecretHash(email: string, clientId: string, clientSecret: string) {
 		const message = email + clientId;
 
-		const hmac = createHmac("sha256", clientSecret)
-			.update(message)
-			.digest("base64");
+		const hmac = createHmac("sha256", clientSecret).update(message).digest("base64");
 
 		return hmac;
 	}
@@ -45,11 +43,7 @@ export class AuthService {
 		const clientId = this.requiredEnv("COGNITO_CLIENT_ID");
 		const clientSecret = this.requiredEnv("COGNITO_SECRET_ID");
 
-		const secretHash = this.generateSecretHash(
-			createUserDto.email,
-			clientId,
-			clientSecret,
-		);
+		const secretHash = this.generateSecretHash(createUserDto.email, clientId, clientSecret);
 		try {
 			const signUpCmd = new SignUpCommand({
 				ClientId: clientId,
@@ -80,10 +74,7 @@ export class AuthService {
 				}),
 			);
 
-			const newUser = await this.userServices.createUser(
-				createUserDto,
-				result.UserSub,
-			);
+			const newUser = await this.userServices.createUser(createUserDto, result.UserSub);
 
 			return { message: "Usuario Criado com sucesso", newUser: newUser };
 		} catch (error) {
@@ -95,11 +86,7 @@ export class AuthService {
 		const clientId = this.requiredEnv("COGNITO_CLIENT_ID");
 		const clientSecret = this.requiredEnv("COGNITO_SECRET_ID");
 
-		const secretHash = this.generateSecretHash(
-			loginUserDto.email,
-			clientId,
-			clientSecret,
-		);
+		const secretHash = this.generateSecretHash(loginUserDto.email, clientId, clientSecret);
 
 		try {
 			const findUser = await this.userServices.verifyUser(loginUserDto.email);
@@ -137,15 +124,9 @@ export class AuthService {
 		const clientSecret = this.requiredEnv("COGNITO_SECRET_ID");
 
 		try {
-			const findUser = await this.userServices.verifyUser(
-				refreshTokenDto.email,
-			);
+			const findUser = await this.userServices.verifyUser(refreshTokenDto.email);
 
-			const secretHash = this.generateSecretHash(
-				findUser.cognito_id,
-				clientId,
-				clientSecret,
-			);
+			const secretHash = this.generateSecretHash(findUser.cognito_id, clientId, clientSecret);
 			const command = new InitiateAuthCommand({
 				AuthFlow: "REFRESH_TOKEN_AUTH",
 				ClientId: clientId,

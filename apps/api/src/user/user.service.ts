@@ -1,18 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import type { Role } from "@prisma/client";
 import { PrismaService } from "src/prisma/prisma.service";
-import type { CreateUserDto } from "./dto/createuser.dto";
 import { PayloadAccessTokenDto } from "@/auth/dto/payload-access-token.dto";
+import type { CreateUserDto } from "./dto/createuser.dto";
 
 @Injectable()
 export class UserService {
 	constructor(private prisma: PrismaService) {}
 
-	async createUser(
-		createUserDto: CreateUserDto,
-		cognitoId: string,
-		role: Role = "USER",
-	) {
+	async createUser(createUserDto: CreateUserDto, cognitoId: string, role: Role = "USER") {
 		const newUser = await this.prisma.users.create({
 			data: {
 				name: createUserDto.name,
@@ -33,10 +29,7 @@ export class UserService {
 			});
 
 			if (!findUser) {
-				throw new HttpException(
-					"Credenciais invalidas",
-					HttpStatus.BAD_REQUEST,
-				);
+				throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
 			}
 			return findUser;
 		} catch (error) {
@@ -44,9 +37,7 @@ export class UserService {
 		}
 	}
 
-	async updateUser(){}
+	async updateUser() {}
 
-	async getUser(payloadAccessToken: PayloadAccessTokenDto){
-
-	}
+	async getUser(payloadAccessToken: PayloadAccessTokenDto) {}
 }
