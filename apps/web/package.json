@@ -17,10 +17,10 @@
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.562.0",
     "motion": "^12.23.24",
-    "next": "15.5.9",
+    "next": "16.1.1",
     "next-themes": "^0.4.6",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "save-dev": "^0.0.1-security",
     "sharp": "^0.31.3",
     "tailwind-merge": "^2.6.0"
