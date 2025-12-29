@@ -1,4 +1,7 @@
-import { Button, Wrapper } from "@/components";
+"use client";
+
+import { Wrapper } from "@/components";
+import { Button } from "@/components/animate-ui/components/buttons/button";
 import { contactSection } from "@/lib/content/contact";
 import { SECTION_IDS } from "@/lib/utils/config";
 
@@ -19,7 +22,15 @@ const Contact = () => {
         <p key={paragraph + i.toString()}>{paragraph}</p>
       ))}
 
-      <Button type="link" size="lg" href={link} center className="mt-12">
+      <Button
+        type="button"
+        variant="outline"
+        onClick={() => window.open(link, "_blank")}
+        size={"lg"}
+        hoverScale={1}
+        tapScale={0.95}
+        className="bg-transparent border-accent text-accent hover:text-white mt-8 h-12"
+      >
         Say Hello
       </Button>
     </Wrapper>
