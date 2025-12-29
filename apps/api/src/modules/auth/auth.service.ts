@@ -1,3 +1,4 @@
+import { createHmac } from "node:crypto";
 import {
 	AdminConfirmSignUpCommand,
 	AdminInitiateAuthCommand,
@@ -7,10 +8,8 @@ import {
 	SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
-import { createHmac } from "crypto";
-import { response } from "express";
-import type { CreateUserDto } from "../user/dto/createuser.dto";
-import { UserService } from "../user/user.service";
+import type { CreateUserDto } from "../users/dto/create-user.dto";
+import { UserService } from "../users/users.service";
 import { COGNITO_PROVIDER } from "./config/cognito.provider";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { RefreshTokenDto } from "./dto/refresh-token.dto";
@@ -77,7 +76,7 @@ export class AuthService {
 			const newUser = await this.userServices.createUser(createUserDto, result.UserSub);
 
 			return { message: "Usuario Criado com sucesso", newUser: newUser };
-		} catch (error) {
+		} catch (_error) {
 			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -114,7 +113,7 @@ export class AuthService {
 				idToken: res.AuthenticationResult.IdToken,
 				expiresIn: res.AuthenticationResult.ExpiresIn,
 			};
-		} catch (error) {
+		} catch (_error) {
 			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -126,7 +125,7 @@ export class AuthService {
 		try {
 			const findUser = await this.userServices.verifyUser(refreshTokenDto.email);
 
-			const secretHash = this.generateSecretHash(findUser.cognito_id, clientId, clientSecret);
+			const secretHash = this.generateSecretHash(findUser.cognitoId, clientId, clientSecret);
 			const command = new InitiateAuthCommand({
 				AuthFlow: "REFRESH_TOKEN_AUTH",
 				ClientId: clientId,
@@ -150,8 +149,7 @@ export class AuthService {
 				expiresIn: result.ExpiresIn,
 				tokenType: result.TokenType,
 			};
-		} catch (error) {
-			console.log(error);
+		} catch (_error) {
 			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
 		}
 	}

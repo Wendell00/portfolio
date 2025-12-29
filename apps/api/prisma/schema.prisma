@@ -14,28 +14,52 @@ model Users {
   username String
   email String @unique
   role Role @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime? @updatedAt
-  deletedAt DateTime? 
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
   active  Boolean  @default(true)
 
-  avatar_upload_id String?    
-  avatar           Upload?    @relation(fields: [avatar_upload_id], references: [id], onDelete: Cascade)
+  uploads   Upload[]
+  posts Posts[]
 
-  cognito_id String
+  cognitoId String
 } 
 
 model Upload {
   id String @id @default(uuid())
-  path_url String
-  mime_type String
+  pathUrl String @map("path_url")
+  mimeType String @map("mime_type")
   size Float
   name String
+  isActive Boolean @default(true) @map("is_active")
 
-  user Users[]
+  userId   String @map("user_id")
+  user      Users   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type      UploadType
+  createdAt DateTime @default(now())@map("created_at")
+  deletedAt DateTime? @map("deleted_at")
 }
 
-enum Role{
+model Posts {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  createdAt DateTime @default(now()) @map("created_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  userId String @map("user_id")
+  user   Users @relation(fields: [userId], references: [id])
+}
+
+enum Role {
   USER
   ADMIN
+}
+
+enum UploadType {
+  AVATAR
+  POST
+  DOCUMENT
+  OTHER
 }
