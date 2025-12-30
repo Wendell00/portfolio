@@ -69,7 +69,7 @@ jobs:
   lint-api:
     name: Run ESLint (api)
     runs-on: ubuntu-latest
-    needs: build-web
+    needs: build
     defaults:
       run:
         working-directory: apps/api
