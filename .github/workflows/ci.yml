@@ -11,7 +11,8 @@ on:
       - develop
 
 jobs:
-  lint:
+  # ---------------- WEB ----------------
+  lint-web:
     name: Run ESLint (web)
     runs-on: ubuntu-latest
     defaults:
@@ -19,49 +20,89 @@ jobs:
         working-directory: apps/web
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: pnpm
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v2
         with:
           version: 8
 
-      - name: Install dependencies
-        run: pnpm install
+      - run: pnpm install
+      - run: pnpm run lint:fix
 
-      - name: Run ESLint
-        run: pnpm run lint:fix
-
-  build:
+  build-web:
     name: Build Next.js (web)
     runs-on: ubuntu-latest
-    needs: lint
+    needs: lint-web
     defaults:
       run:
         working-directory: apps/web
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: pnpm
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v2
         with:
           version: 8
 
-      - name: Install dependencies
-        run: pnpm install
+      - run: pnpm install
+      - run: pnpm run build
 
-      - name: Build Next.js
-        run: pnpm run build
+  # ---------------- API ----------------
+  lint-api:
+    name: Run ESLint (api)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - run: pnpm install
+      - run: pnpm run lint:fix
+
+  build-api:
+    name: Generate Prisma (api)
+    runs-on: ubuntu-latest
+    needs: lint-api
+    environment: portfolio
+    defaults:
+      run:
+        working-directory: apps/api
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - run: pnpm install
+      - run: pnpm generate
