@@ -11,7 +11,6 @@ on:
       - develop
 
 jobs:
-  # ---------------- WEB ----------------
   lint-web:
     name: Run ESLint (web)
     runs-on: ubuntu-latest
@@ -57,7 +56,6 @@ jobs:
       - run: pnpm install
       - run: pnpm run build
 
-  # ---------------- API ----------------
   lint-api:
     name: Run ESLint (api)
     runs-on: ubuntu-latest
@@ -105,4 +103,4 @@ jobs:
           version: 8
 
       - run: pnpm install
-      - run: pnpm generate
+      - run: pnpm build
