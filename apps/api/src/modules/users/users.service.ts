@@ -7,7 +7,7 @@ import type { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
-export class UserService {
+export class UsersService {
 	constructor(private prisma: PrismaService) {}
 
 	async createUser(createUserDto: CreateUserDto, cognitoId: string, role: Role = "USER") {
@@ -129,7 +129,7 @@ export class UserService {
 
 			return this.prisma.users.update({
 				where: { id: user.id },
-				data: { deletedAt: new Date() },
+				data: { deletedAt: new Date(), active: false },
 			});
 		} catch (_error) {
 			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);

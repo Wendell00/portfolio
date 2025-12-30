@@ -1,14 +1,14 @@
-import { Body, Controller, Get, Patch, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Patch, Post, UseGuards } from "@nestjs/common";
 import { PayloadAccessTokenDto } from "../auth/dto/payload-access-token.dto";
 import { JwtCognitoGuard } from "../auth/guard/jwt-cognito.guard";
 import { TokenPayloadParam } from "../auth/params/token-payload.params";
 import { AvatarUserDto } from "./dto/avatar-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { UserService } from "./users.service";
+import { UsersService } from "./users.service";
 
 @Controller("user")
-export class UserController {
-	constructor(private readonly userService: UserService) {}
+export class UsersController {
+	constructor(private readonly userService: UsersService) {}
 
 	@UseGuards(JwtCognitoGuard)
 	@Get()
@@ -26,5 +26,11 @@ export class UserController {
 	@Patch("update")
 	updateUser(@TokenPayloadParam() tokenPayload: PayloadAccessTokenDto, @Body() updateUserDto: UpdateUserDto) {
 		return this.userService.updateUser(tokenPayload, updateUserDto);
+	}
+
+	@UseGuards(JwtCognitoGuard)
+	@Delete("delete")
+	deleteUser(@TokenPayloadParam() tokenPayload: PayloadAccessTokenDto) {
+		return this.userService.softDelete(tokenPayload);
 	}
 }

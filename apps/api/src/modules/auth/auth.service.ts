@@ -9,7 +9,7 @@ import {
 } from "@aws-sdk/client-cognito-identity-provider";
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import type { CreateUserDto } from "../users/dto/create-user.dto";
-import { UserService } from "../users/users.service";
+import { UsersService } from "../users/users.service";
 import { COGNITO_PROVIDER } from "./config/cognito.provider";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { RefreshTokenDto } from "./dto/refresh-token.dto";
@@ -19,7 +19,7 @@ export class AuthService {
 	constructor(
 		@Inject(COGNITO_PROVIDER)
 		private readonly client: CognitoIdentityProviderClient,
-		private readonly userServices: UserService,
+		private readonly userServices: UsersService,
 	) {}
 
 	requiredEnv(name: string): string {
