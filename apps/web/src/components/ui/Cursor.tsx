@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import useWindowWidth from "@/lib/hooks/use-window-width";
 
 type Props = {
   className?: string;
@@ -7,6 +8,8 @@ type Props = {
 
 const Cursor = ({ className = "" }: Props) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const windowWidth = useWindowWidth();
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
@@ -19,6 +22,8 @@ const Cursor = ({ className = "" }: Props) => {
       document.removeEventListener("mousemove", onMouseMove);
     };
   }, []);
+
+  if (windowWidth <= 1000) return null;
 
   return (
     <div

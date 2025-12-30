@@ -8,7 +8,6 @@ import { navbarSection } from "@/lib/content/navbar";
 import { author } from "@/lib/content/portfolio";
 import useWindowWidth from "@/lib/hooks/use-window-width";
 import { SECTION_IDS } from "@/lib/utils/config";
-import { getBreakpointsWidth } from "@/lib/utils/helper";
 import { fadeIn, slideIn } from "@/styles/animations";
 import { Button } from "../animate-ui/components/buttons/button";
 import type { NavItemsProps } from "./types";
@@ -62,8 +61,7 @@ export const Navbar = () => {
   const [navbarCollapsed, setNavbarCollapsed] = useState(false);
   const id = "navbar";
   const windowWidth = useWindowWidth();
-  const md = getBreakpointsWidth();
-  const ANIMATION_DELAY = windowWidth <= md ? 0 : 0.8;
+  const ANIMATION_DELAY = windowWidth <= 1000 ? 0 : 0.8;
 
   useEffect(() => {
     hideNavWhileScrolling({ when: !navbarCollapsed });
@@ -92,7 +90,7 @@ export const Navbar = () => {
         className="md:invisible"
       />
 
-      {(navbarCollapsed || windowWidth > md) && (
+      {(navbarCollapsed || windowWidth >= 1000) && (
         <nav className="capitalize absolute text-sm duration-200 md:bg-transparent z-50 w-[90%] left-1/2 -translate-x-1/2 top-full h-max rounded-xl shadow-xl p-6 bg-bg-secondary md:blocks md:static md:w-auto md:left-auto md:transform-none md:top-auto md:rounded-none md:shadow-none md:p-0 md:h-auto">
           <ul className="flex flex-col items-stretch gap-3 list-style-none lg:gap-5 xl:gap-6 md:flex-row md:items-center">
             {navLinks.map(({ name, url }, index) => (
@@ -121,7 +119,7 @@ export const Navbar = () => {
               <DarkModeButton
                 onClick={() => setNavbarCollapsed(false)}
                 variants={slideIn({
-                  delay: ANIMATION_DELAY + (navLinks.length + 1) / 10,
+                  delay: ANIMATION_DELAY,
                   direction: "down",
                 })}
                 initial="hidden"
