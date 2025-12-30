@@ -27,11 +27,14 @@ export class PostsService {
 		}
 	}
 
-	async getPosts(payloadToken: PayloadAccessTokenDto) {
-		const user = await this.userService.getUser(payloadToken);
-
+	async getPosts() {
 		const userPosts = await this.prisma.posts.findMany({
-			where: { userId: user.id, deletedAt: null },
+			where: { deletedAt: null },
+			select: {
+				title: true,
+				message: true,
+				createdAt: true,
+			},
 			orderBy: { createdAt: "desc" },
 		});
 

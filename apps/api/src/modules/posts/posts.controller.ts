@@ -28,10 +28,10 @@ export class PostsController {
 		return this.postsService.createPost(payloadToken, createPostDto);
 	}
 
-	@UseGuards(JwtCognitoGuard)
+
 	@Get()
-	getPosts(@TokenPayloadParam() payloadToken: PayloadAccessTokenDto) {
-		return this.postsService.getPosts(payloadToken);
+	getPosts() {
+		return this.postsService.getPosts();
 	}
 
 	@UseGuards(JwtCognitoGuard)
