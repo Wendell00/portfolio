@@ -28,7 +28,6 @@ export class PostsController {
 		return this.postsService.createPost(payloadToken, createPostDto);
 	}
 
-
 	@Get()
 	getPosts() {
 		return this.postsService.getPosts();

@@ -4,6 +4,8 @@ import {
 	AdminInitiateAuthCommand,
 	AdminUpdateUserAttributesCommand,
 	type CognitoIdentityProviderClient,
+	ConfirmForgotPasswordCommand,
+	ForgotPasswordCommand,
 	InitiateAuthCommand,
 	SignUpCommand,
 } from "@aws-sdk/client-cognito-identity-provider";
@@ -11,6 +13,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import type { CreateUserDto } from "../users/dto/create-user.dto";
 import { UsersService } from "../users/users.service";
 import { COGNITO_PROVIDER } from "./config/cognito.provider";
+import { ConfirmForgotPasswordDto, ForgotPasswordDto } from "./dto/forgot-password.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { RefreshTokenDto } from "./dto/refresh-token.dto";
 
@@ -149,6 +152,53 @@ export class AuthService {
 				expiresIn: result.ExpiresIn,
 				tokenType: result.TokenType,
 			};
+		} catch (_error) {
+			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	async forgotPassword(forgotpasswordDto: ForgotPasswordDto) {
+		const clientId = this.requiredEnv("COGNITO_CLIENT_ID");
+		const clientSecret = this.requiredEnv("COGNITO_SECRET_ID");
+
+		const secretHash = this.generateSecretHash(forgotpasswordDto.email, clientId, clientSecret);
+		try {
+			const findUser = await this.userServices.findUserWithEmail(forgotpasswordDto.email);
+
+			const command = new ForgotPasswordCommand({
+				ClientId: process.env.COGNITO_CLIENT_ID,
+				Username: findUser.email,
+				SecretHash: secretHash,
+			});
+
+			await this.client.send(command);
+
+			return { message: "Success, your code for reset password has to send in your email." };
+		} catch (_error) {
+			console.log(_error);
+			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	async confirmForgotPassword(confirmForgotPassword: ConfirmForgotPasswordDto) {
+		const clientId = this.requiredEnv("COGNITO_CLIENT_ID");
+		const clientSecret = this.requiredEnv("COGNITO_SECRET_ID");
+
+		const secretHash = this.generateSecretHash(confirmForgotPassword.email, clientId, clientSecret);
+		try {
+			const findUser = await this.userServices.findUserWithEmail(confirmForgotPassword.email);
+
+			const command = new ConfirmForgotPasswordCommand({
+				ClientId: process.env.COGNITO_CLIENT_ID,
+				Username: findUser.email,
+				ConfirmationCode: confirmForgotPassword.code,
+				Password: confirmForgotPassword.newPassword,
+				SecretHash: secretHash,
+			});
+
+			await this.client.send(command);
+
+			return { message: "Your password is reseted" };
 		} catch (_error) {
 			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
 		}

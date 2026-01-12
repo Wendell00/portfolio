@@ -32,6 +32,7 @@ export class PostsService {
 			where: { deletedAt: null },
 			select: {
 				title: true,
+
 				message: true,
 				createdAt: true,
 			},

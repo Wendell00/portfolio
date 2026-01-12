@@ -135,4 +135,21 @@ export class UsersService {
 			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
 		}
 	}
+
+	async findUserWithEmail(email: string) {
+		try {
+			const findUser = await this.prisma.users.findFirst({
+				where: { email: email },
+				select: { email: true },
+			});
+
+			if (!findUser) {
+				throw new HttpException("User não encontrado", HttpStatus.BAD_REQUEST);
+			}
+
+			return findUser;
+		} catch (_error) {
+			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
+		}
+	}
 }
