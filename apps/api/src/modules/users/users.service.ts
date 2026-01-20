@@ -11,17 +11,25 @@ export class UsersService {
 	constructor(private prisma: PrismaService) {}
 
 	async createUser(createUserDto: CreateUserDto, cognitoId: string, role: Role = "USER") {
-		const newUser = await this.prisma.users.create({
-			data: {
-				name: createUserDto.name,
-				username: createUserDto.username,
-				email: createUserDto.email,
-				role: role,
-				cognitoId: cognitoId,
-			},
-		});
+		try {
+			const newUser = await this.prisma.users.create({
+				data: {
+					name: createUserDto.name,
+					username: createUserDto.username,
+					email: createUserDto.email,
+					role: role,
+					cognitoId: cognitoId,
+				},
+			});
 
-		return newUser;
+			if (!createUserDto) {
+				throw new HttpException("Incompleted box", HttpStatus.BAD_REQUEST);
+			}
+
+			return newUser;
+		} catch (_error) {
+			throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	async verifyUser(email: string) {
@@ -31,7 +39,7 @@ export class UsersService {
 			});
 
 			if (!findUser) {
-				throw new HttpException("Credenciais invalidas", HttpStatus.BAD_REQUEST);
+				throw new HttpException("User not found!", HttpStatus.NOT_FOUND);
 			}
 			return findUser;
 		} catch (_error) {
@@ -41,6 +49,10 @@ export class UsersService {
 
 	async updateUser(payloadAccessToken: PayloadAccessTokenDto, updateUserDto: UpdateUserDto) {
 		const user = await this.getUser(payloadAccessToken);
+
+		if (!updateUserDto) {
+			throw new HttpException("Incompleted box", HttpStatus.BAD_REQUEST);
+		}
 
 		const { avatar, ...updateuser } = updateUserDto;
 
@@ -61,16 +73,15 @@ export class UsersService {
 					});
 				}
 
-				// B) atualizar user
 				const newUser = await tx.users.update({
 					where: { id: user.id },
 					data: {
-						name: updateuser?.name ? updateuser?.name : user.name,
-						username: updateuser.username ? updateuser.username : user.username,
+						name: updateuser.user?.name ? updateuser.user.name : user.name,
+						username: updateuser.user?.username ? updateuser.user.username : user.username,
 						updatedAt: new Date(),
 					},
 				});
-				// C) retorno
+
 				return {
 					user: newUser,
 					avatar: newAvatar,
